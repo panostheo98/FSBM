@@ -1,0 +1,69 @@
+#@package _global_
+
+name: ffhq_age
+dim: 512
+image_size: [3,1024,1024]
+tau: 10
+ks_size: 1000
+
+lim: 15
+
+optim:
+  max_epochs: 4
+  batch_size: 16
+  lr: 1e-4
+
+### problem
+prob:
+  name: ${name}
+  sigma: 0.5
+  p0:
+    name: ffhq_age
+    resize: ${image_size[2]}
+    ages: [adult]
+  p1:
+    name: ffhq_age
+    resize: ${image_size[2]}
+    ages: [child]
+
+lsbm:
+  output_seed: 42
+  batch_size: 128
+  eps: 0.1
+  lr: 1e-3
+  max_iter: 30000
+  n_potentials: 10
+  is_diag: True
+  S_init: 0.1
+
+### network
+field: vector
+net: toy
+
+csoc:
+  name: ${name}
+
+  ## train dataloader (B * epd_fct = data size)
+  B: 25600     # number of couplings
+  epd_fct: 500 # times each coupling appears in each epoch
+
+  ## spline param
+  T_mean: 8  # number of knots mean spline
+  T_gamma: 8 # number of knots gamma spline
+
+  ## spline optim
+  optim: adam    # optimizer {sgd, adam}
+  S: 30          # number of timesteps
+  N: 4           # number of trajs per couplings
+  lr_mean: 0.01  # lr of mean spline
+  lr_gamma: 0.03 # lr of gamma spline
+  nitr: 100      # optim steps
+  mB: 64         # micro batch size FIXME tune base on spline
+  scale_by_sigma: true # scale control by sigma (equiv to KL)
+  weight_c: 0.2
+  weight_s: 5.0
+
+
+plot:
+  name: ${name}
+  lim: ${lim}

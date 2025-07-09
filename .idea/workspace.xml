@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7d8d52c1-c104-4034-853c-8226abc5624f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/configs/experiment/ffhq_age.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/experiment/ffhq_gen.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/experiment/opinion.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/experiment/stunnel.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/experiment/vneck.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/train.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/age.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/gender.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/kp_traj_ffhq_age.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/kp_traj_ffhq_gen.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/kp_traj_opinion.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/kp_traj_stunnel.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/kp_traj_vneck.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/latents.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ffhq_sample.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Imitation_Learning/configs/experiment/lift.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Imitation_Learning/configs/train.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/ffhq/model_157.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/ffhq/model_194.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/fsbm_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stargan-v2/get_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stargan-v2/get_latent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/CODING.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/CODING.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/ema.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/ema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/fsbm_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/fsbm_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/gaussian_path.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/gaussian_path.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/nn.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/nn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/obstacles.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/obstacles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/opinion.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/opinion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/plotting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/sde.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/sde.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsbm/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lightsbm.py" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/configs/ffhq.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/configs/ffhq.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/dataset_preparation/split_tfrecords_ffhq.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/dataset_preparation/split_tfrecords_ffhq.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/defaults.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/interactive_demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/interactive_demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_generation_figure.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_generation_figure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_ffhq_real.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_ffhq_real.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_interpolation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_interpolation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_multires.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_multires.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_paged.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_recon_figure_paged.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_traversarls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/make_figures/make_traversarls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/metrics/fid.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/metrics/fid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/metrics/fid_rec.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/metrics/fid_rec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/metrics/ppl.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/metrics/ppl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/train_alae.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/train_alae.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/download_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/download_all.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/notebooks/LightSBM_MSCI.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/notebooks/LightSBM_MSCI.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/notebooks/LightSBM_swiss_roll.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/notebooks/LightSBM_swiss_roll.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LightSB-Matching/notebooks/notebooks_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/notebooks/notebooks_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/configs/experiment/biology.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/configs/experiment/biology.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/gaussian_path.py" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/gaussian_path.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/interp1d.py" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/interp1d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/inference.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gsbm_trial/generalized-schrodinger-bridge-matching" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/acceleration.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/acceleration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/configs/experiment/BW.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/configs/experiment/BW.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/configs/experiment/EB.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/configs/experiment/EB.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/configs/experiment/GoM.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/configs/experiment/GoM.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/configs/experiment/LV.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/configs/experiment/LV.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/configs/experiment/afhq.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/configs/experiment/afhq.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/configs/experiment/toy.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/configs/experiment/toy.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/dataset/get_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/dataset/get_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/dataset/pair_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/dataset/pair_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/evaluator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/mean_ODEs.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/mean_ODEs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/multimarg_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/multimarg_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/networks/get_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/networks/get_network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mmsbm/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mmsbm/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stargan-v2" beforeDir="false" afterPath="$PROJECT_DIR$/../stargan-v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stargan-v2/core/checkpoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stargan-v2/core/checkpoint.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;panostheo98&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/panostheo98/FSBM.git&quot;,
+    &quot;accountId&quot;: &quot;11384332-31c4-4387-b374-ce50ce5f2cda&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file:///usr/lib/python3/dist-packages/matplotlib/patches.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2hT9sYfK56e3RSoxaS0YIKzWPCF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ptheodor3/Documents/CODING/FSBM/data&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
+      <window_info id="Merge Requests" show_stripe_button="false" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info id="Pull Requests" show_stripe_button="false" />
+      <window_info id="Learn" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19003907" />
+      <window_info id="Commit" order="1" weight="0.15449218" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.15449218" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
+      <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Jupyter" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.17951389" />
+      <window_info anchor="bottom" id="Services" order="3" />
+      <window_info anchor="bottom" id="Python Packages" order="4" weight="0.1" />
+      <window_info anchor="bottom" id="Python Console" order="5" weight="0.1" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="6" visible="true" weight="0.18506944" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.33090279" />
+      <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
+      <window_info anchor="right" id="documentation.v2" show_stripe_button="false" side_tool="true" />
+      <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
+      <window_info anchor="right" id="SciView" show_stripe_button="false" />
+      <window_info anchor="right" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+      <window_info anchor="right" id="Plots" order="5" weight="0.1" />
+    </layout>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/outputs/runs/ffhq_gen/2024.11.13/173724" />
+      <recent name="$PROJECT_DIR$/outputs/runs/ffhq_age/2024.11.13/174344" />
+      <recent name="$PROJECT_DIR$/outputs/runs/ffhq_age/2024.11.13/172913" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/outputs/runs/ffhq_age" />
+      <recent name="$PROJECT_DIR$/outputs/runs/ffhq_gen/2024.11.13/171221" />
+      <recent name="$PROJECT_DIR$/../.." />
+      <recent name="$PROJECT_DIR$/outputs/runs/ffhq_age/2024.09.02/180149" />
+      <recent name="$PROJECT_DIR$/outputs/runs/vneck/2024.09.01/000941" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.17890.14" />
+        <option value="bundled-python-sdk-5b207ade9991-7e9c3bbb6e34-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.17890.14" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7d8d52c1-c104-4034-853c-8226abc5624f" name="Changes" comment="" />
+      <created>1717607407773</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717607407773</updated>
+      <workItem from="1717607408960" duration="85669000" />
+      <workItem from="1718210215329" duration="19446000" />
+      <workItem from="1718241437482" duration="5720000" />
+      <workItem from="1718296604662" duration="41922000" />
+      <workItem from="1718383146949" duration="253000" />
+      <workItem from="1718383478920" duration="3186000" />
+      <workItem from="1718406701006" duration="22000" />
+      <workItem from="1718406758405" duration="133068000" />
+      <workItem from="1719160721632" duration="41619000" />
+      <workItem from="1719245988251" duration="29260000" />
+      <workItem from="1719354290882" duration="24069000" />
+      <workItem from="1719596787280" duration="3084000" />
+      <workItem from="1719685422724" duration="2471000" />
+      <workItem from="1719858231516" duration="69000" />
+      <workItem from="1719858326939" duration="38000" />
+      <workItem from="1719858488346" duration="44167000" />
+      <workItem from="1720238459054" duration="14385000" />
+      <workItem from="1720303177310" duration="15701000" />
+      <workItem from="1720383872190" duration="24443000" />
+      <workItem from="1720460914692" duration="22632000" />
+      <workItem from="1720645937130" duration="5931000" />
+      <workItem from="1721245306788" duration="83193000" />
+      <workItem from="1721649695060" duration="28000" />
+      <workItem from="1721755422211" duration="10519000" />
+      <workItem from="1721912097427" duration="32744000" />
+      <workItem from="1722272920440" duration="17215000" />
+      <workItem from="1722337762428" duration="10750000" />
+      <workItem from="1722379285584" duration="15331000" />
+      <workItem from="1722430399659" duration="7430000" />
+      <workItem from="1722515985546" duration="3270000" />
+      <workItem from="1723020890336" duration="2435000" />
+      <workItem from="1724187604360" duration="12000" />
+      <workItem from="1724187630732" duration="71552000" />
+      <workItem from="1724707939912" duration="255000" />
+      <workItem from="1724709392558" duration="12659000" />
+      <workItem from="1724732636640" duration="14699000" />
+      <workItem from="1724802029178" duration="25045000" />
+      <workItem from="1724869102146" duration="10384000" />
+      <workItem from="1724881464288" duration="64286000" />
+      <workItem from="1725132012037" duration="6912000" />
+      <workItem from="1725140226239" duration="23218000" />
+      <workItem from="1725215712537" duration="9631000" />
+      <workItem from="1725296464323" duration="6476000" />
+      <workItem from="1725329364944" duration="12860000" />
+      <workItem from="1725342411821" duration="20318000" />
+      <workItem from="1725906483975" duration="13649000" />
+      <workItem from="1725929558200" duration="2605000" />
+      <workItem from="1725941972469" duration="11729000" />
+      <workItem from="1726092021095" duration="38399000" />
+      <workItem from="1726355706370" duration="26858000" />
+      <workItem from="1727126768573" duration="5718000" />
+      <workItem from="1727143870193" duration="8643000" />
+      <workItem from="1727723741636" duration="1138000" />
+      <workItem from="1727750032216" duration="1501000" />
+      <workItem from="1728494298997" duration="13994000" />
+      <workItem from="1730084764184" duration="11967000" />
+      <workItem from="1730134540703" duration="24635000" />
+      <workItem from="1730306630613" duration="12000" />
+      <workItem from="1730751647168" duration="3638000" />
+      <workItem from="1731530238571" duration="14409000" />
+      <workItem from="1731639599264" duration="1897000" />
+      <workItem from="1731643526760" duration="35167000" />
+      <workItem from="1731977432951" duration="14973000" />
+      <workItem from="1732046396720" duration="108000" />
+      <workItem from="1732048498129" duration="2885000" />
+      <workItem from="1732600142736" duration="3974000" />
+      <workItem from="1732658794453" duration="489000" />
+      <workItem from="1732668419019" duration="5804000" />
+      <workItem from="1732675940913" duration="2086000" />
+      <workItem from="1736864012803" duration="41000" />
+      <workItem from="1736868618464" duration="32000" />
+      <workItem from="1736868694864" duration="85000" />
+      <workItem from="1736868844913" duration="1599000" />
+      <workItem from="1737250033970" duration="11000" />
+      <workItem from="1737253820498" duration="51000" />
+      <workItem from="1737673808143" duration="1702000" />
+      <workItem from="1737739091717" duration="5000" />
+      <workItem from="1738009227467" duration="5000" />
+      <workItem from="1739582746765" duration="5703000" />
+      <workItem from="1749068347426" duration="3647000" />
+      <workItem from="1751055746314" duration="689000" />
+      <workItem from="1751056465384" duration="2528000" />
+      <workItem from="1751632535996" duration="41276000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,11 @@
+gdown
+omegaconf
+hydra-core==1.2.0
+easydict
+colored_traceback
+pytorch-lightning==1.8.5.post0
+ipdb
+rich
+geomloss
+POT
+yacs
