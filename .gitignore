@@ -171,4 +171,5 @@ outputs/*
 ALAE/training_artifacts/celeba/*
 ALAE/training_artifacts/bedroom/*
 ALAE/training_artifacts/ffhq_gen/*
+ALAE/training_artifacts/ffhq_age/*
 ALAE/training_artifacts/celeba-hq256/*

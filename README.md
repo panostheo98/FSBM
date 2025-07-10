@@ -31,8 +31,9 @@ By default, checkpoints and figures are saved under the folder `outputs`.
 ## Semi-supervised image translation
 
 ### Dataset
+Run the first cell in `download_data.ipynb` to download the latent vectors and the keypoint trajectories for the semi-supervised image translations. Run the second cell in the `download_data.ipynb` to download the checkpoints for the ALAE.
 The latent vectors and the `ALAE` autoencoder for the translation tasks downloaded from [LightSB-Matching](https://github.com/SKholkin/LightSB-Matching/tree/main)
-appear in the `data` and `ALAE` folders respectively.
+should appear in the `data` and `ALAE/training_artifacts` folders respectively.
 Use the pre-aligned pairs for each translation task in the `data` folder to perform age or gender translation. 
 
 ### Train

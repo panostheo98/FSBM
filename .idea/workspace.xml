@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d8d52c1-c104-4034-853c-8226abc5624f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Imitation_Learning/configs/experiment/lift.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Imitation_Learning/configs/train.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/ffhq/model_157.pth" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/ffhq/model_194.pth" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../generalized-schrodinger-bridge-matching/gsbm/fsbm_model.py" afterDir="false" />
@@ -14,7 +12,6 @@
       <change afterPath="$PROJECT_DIR$/../stargan-v2/get_latent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/CODING.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/CODING.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" afterDir="false" />
@@ -108,20 +105,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/ptheodor3/Documents/CODING/FSBM/data",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ptheodor3/Documents/CODING/FSBM/data&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
