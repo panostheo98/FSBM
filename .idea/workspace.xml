@@ -5,23 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d8d52c1-c104-4034-853c-8226abc5624f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/experiment/ffhq_age.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/experiment/ffhq_gen.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/experiment/opinion.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/experiment/stunnel.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/experiment/vneck.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/test.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/train.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/age.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/gender.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/kp_traj_ffhq_age.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/kp_traj_ffhq_gen.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/kp_traj_opinion.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/kp_traj_stunnel.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/kp_traj_vneck.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/latents.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ffhq_sample.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Imitation_Learning/configs/experiment/lift.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Imitation_Learning/configs/train.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/training_artifacts/ffhq/model_157.pth" afterDir="false" />
@@ -31,19 +14,7 @@
       <change afterPath="$PROJECT_DIR$/../stargan-v2/get_latent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/CODING.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/CODING.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/ema.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/ema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/fsbm_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/fsbm_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/gaussian_path.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/gaussian_path.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/nn.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/nn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/obstacles.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/obstacles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/opinion.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/opinion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/plotting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/sde.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/sde.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsbm/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/fsbm/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lightsbm.py" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" afterDir="false" />
@@ -108,7 +79,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -137,20 +108,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ptheodor3/Documents/CODING/FSBM/data&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/ptheodor3/Documents/CODING/FSBM/data",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
@@ -300,7 +271,7 @@
       <workItem from="1749068347426" duration="3647000" />
       <workItem from="1751055746314" duration="689000" />
       <workItem from="1751056465384" duration="2528000" />
-      <workItem from="1751632535996" duration="41276000" />
+      <workItem from="1751632535996" duration="41816000" />
     </task>
     <servers />
   </component>
