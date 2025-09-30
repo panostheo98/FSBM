@@ -11,7 +11,6 @@
       <change afterPath="$PROJECT_DIR$/../stargan-v2/get_latent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/CODING.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/CODING.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/alae_ffhq_inference.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../LightSB-Matching/ALAE/checkpointer.py" afterDir="false" />
@@ -270,6 +269,7 @@
       <workItem from="1759164604188" duration="13000" />
       <workItem from="1759249946567" duration="11000" />
       <workItem from="1759250410833" duration="42000" />
+      <workItem from="1759253582672" duration="302000" />
     </task>
     <servers />
   </component>
