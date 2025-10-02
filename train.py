@@ -2,8 +2,11 @@
 import os
 import sys
 
-sys.path.append("..")
+# sys.path.append("..")
 sys.path.append("ALAE/")
+import matplotlib as mpl
+mpl.use('Agg')
+
 import matplotlib.pyplot as plt
 from datetime import datetime
 from omegaconf import DictConfig, OmegaConf
@@ -25,11 +28,15 @@ import fsbm.gaussian_path as gpath_lib
 from fsbm.utils import get_repo_path
 from fsbm.utils import lin_int, NumpyFolder
 import random
+import pathlib
 
 
 torch.backends.cudnn.benchmark = True
 log = logging.getLogger(__name__)
 
+# hydra seems to change your cwd, so let's remember where we started so we can
+# reference relative directories.
+ROOT_DIR = pathlib.Path('.').resolve()
 
 def init_gpath(x0, x1, ccfg):
     B, D = x0.shape
@@ -90,7 +97,7 @@ def main(cfg: DictConfig):
     # Construct model
     p0, p1, p0_val, p1_val = get_dist_boundary(cfg)
     xt_ks = torch.load(
-        f'/home/ptheodor3/Documents/CODING/generalized-schrodinger-bridge-matching/data/kp_traj_{cfg.name}.pt')
+        ROOT_DIR / f'data/kp_traj_{cfg.name}.pt')
     model = FSBMLitModule(cfg, p0, p1, p0_val, p1_val, xt_ks, tau=cfg.tau, guidance=True)
     if cfg.optim.continue_old_training:
         path = ('')

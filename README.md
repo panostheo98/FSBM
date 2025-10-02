@@ -28,6 +28,13 @@ python train.py experiment=$EXP
 where `EXP` is one of the settings in `configs/experiment/*.yaml`. Each `EXP` also has its corresponding trajectories of keypoints in the `data` folder.
 By default, checkpoints and figures are saved under the folder `outputs`.
 
+For example:
+
+```bash
+EXP=ffhq_age
+python train.py experiment=$EXP 
+```
+
 ## Semi-supervised image translation
 
 ### Dataset
@@ -35,6 +42,12 @@ Run the first cell in `download_data.ipynb` to download the latent vectors and t
 The latent vectors and the `ALAE` autoencoder for the translation tasks downloaded from [LightSB-Matching](https://github.com/SKholkin/LightSB-Matching/tree/main)
 should appear in the `data` and `ALAE/training_artifacts` folders respectively.
 Use the pre-aligned pairs for each translation task in the `data` folder to perform age or gender translation. 
+
+Script to download the data:
+
+```bash
+jupyter nbconvert --to notebook --execute my_notebook.ipynb --inplace
+```
 
 ### Train
 ```bash
