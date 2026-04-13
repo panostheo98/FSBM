@@ -26,6 +26,26 @@ resume: null
 seed: 0
 nnodes: 1
 
+contraction:
+  enabled: false
+  log_on_validation: false
+  directions: [fwd, bwd]
+  n_calib: 128
+  alpha: 0.05
+  delta0s: [0.1]
+  nfe: 200
+  log_steps: 8
+  seed: 0
+  save_scores: false
+  save_terminal_distances: false
+  save_histograms: false
+  hist_bins: 20
+  verbose: false
+  jacobian:
+    enabled: false
+    num_states: 2
+    num_times: 2
+
 hydra:
   job:
     chdir: True

@@ -16,6 +16,8 @@ from torch.utils.data import Dataset
 import torchvision.transforms as transforms
 import torch.nn.functional as F
 
+from .contraction import ensure_contraction_cfg
+
 
 def get_job_directory(file_or_checkpoint: Union[str, Dict[str, Any]]) -> str:
     found = False
@@ -45,7 +47,9 @@ def get_job_directory(file_or_checkpoint: Union[str, Dict[str, Any]]) -> str:
 def restore_model(checkpoint, pl_name="fsbm.fsbm_model", device=None):
     ckpt = torch.load(checkpoint, map_location="cpu")
     job_dir = get_job_directory(checkpoint)
-    cfg = OmegaConf.load(os.path.join(job_dir, ".hydra/config.yaml"))
+    cfg = ensure_contraction_cfg(
+        OmegaConf.load(os.path.join(job_dir, ".hydra/config.yaml"))
+    )
     # print(f"Loaded cfg from {job_dir=}!")
 
     from .dataset import get_dist_boundary

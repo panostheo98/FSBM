@@ -4,7 +4,6 @@ import numpy as np
 import math
 from datetime import datetime
 from rich.console import Console
-from easydict import EasyDict as edict
 import copy
 import matplotlib.pyplot as plt
 
@@ -12,9 +11,11 @@ import torch
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 import torchvision.utils as tu
+from omegaconf import OmegaConf
 
 from .network import build_net
-from .sde import build_basedrift, sdeint
+from .sde import build_basedrift, sdeint, paired_sdeint
+from .contraction import ensure_contraction_cfg, evaluate_directional_contraction
 
 from .dataset import PairDataset, SplineDataset
 from . import gaussian_path as gpath_lib
@@ -42,7 +43,7 @@ class FSBMLitModule(pl.LightningModule):
 
         os.makedirs("figs", exist_ok=True)
 
-        self.cfg = cfg
+        self.cfg = ensure_contraction_cfg(cfg)
         self.p0 = p0
         self.p1 = p1
         self.p0_val = p0_val
@@ -151,6 +152,33 @@ class FSBMLitModule(pl.LightningModule):
             verbose=verbose,
         )
         return output
+
+    @torch.no_grad()
+    def sample_paired(
+        self,
+        xinit,
+        yinit,
+        log_steps,
+        direction,
+        drift=None,
+        nfe=None,
+        verbose=False,
+        generator=None,
+    ):
+        drift = self.build_drift(direction) if drift is None else drift
+        diffusion = lambda x, t: self.sigma
+        nfe = nfe or self.cfg.nfe
+        return paired_sdeint(
+            xinit=xinit,
+            yinit=yinit,
+            drift=drift,
+            diffusion=diffusion,
+            direction=direction,
+            nfe=nfe,
+            log_steps=log_steps,
+            verbose=verbose,
+            generator=generator,
+        )
 
     def sample_t(self, batch):
         eps = 1e-4
@@ -335,6 +363,16 @@ class FSBMLitModule(pl.LightningModule):
             self.direction = "fwd"
             self.print("", prefix=False)  # change line
 
+        if self.cfg.contraction.enabled and self.cfg.contraction.log_on_validation:
+            contraction_results = self.evaluate_contraction_suite()
+            for direction, result in contraction_results.items():
+                metrics = self.flatten_contraction_metrics(result)
+                for key, value in metrics.items():
+                    self.log(key, value, on_epoch=True)
+                self.print(
+                    f"[Contraction] {direction}: logged {len(metrics)} contraction metrics."
+                )
+
         torch.cuda.empty_cache()
 
     def train_dataloader(self):
@@ -404,3 +442,70 @@ class FSBMLitModule(pl.LightningModule):
         result = self.sample(p0(512), log_steps=5, direction="fwd", drift=ft, nfe=500)
         plot_xs_opinion(result["t"], result["xs"], 5, "Init", self.cfg.plot)
         save_fig("ft")
+
+    def get_contraction_reference(self, direction):
+        if direction == "fwd":
+            return self.p0_val
+        if direction == "bwd":
+            return self.p1_val
+        raise ValueError(f"Unsupported direction: {direction}")
+
+    def evaluate_contraction_direction(self, direction, contraction_cfg=None):
+        contraction_cfg = self.cfg.contraction if contraction_cfg is None else contraction_cfg
+        drift = self.build_drift(direction)
+        return evaluate_directional_contraction(
+            drift=drift,
+            reference_sampler=self.get_contraction_reference(direction),
+            direction=direction,
+            sigma=self.sigma,
+            n_calib=int(contraction_cfg.n_calib),
+            alpha=float(contraction_cfg.alpha),
+            delta0s=list(contraction_cfg.delta0s),
+            nfe=int(contraction_cfg.nfe),
+            log_steps=int(contraction_cfg.log_steps),
+            seed=int(contraction_cfg.seed),
+            device=self.device,
+            jacobian_cfg=OmegaConf.to_container(
+                contraction_cfg.jacobian, resolve=True
+            ),
+            save_scores=bool(contraction_cfg.save_scores),
+            save_terminal_distances=bool(contraction_cfg.save_terminal_distances),
+            save_histograms=bool(contraction_cfg.save_histograms),
+            hist_bins=int(contraction_cfg.hist_bins),
+            verbose=bool(contraction_cfg.verbose),
+        )
+
+    def evaluate_contraction_suite(self, contraction_cfg=None):
+        contraction_cfg = self.cfg.contraction if contraction_cfg is None else contraction_cfg
+        results = {}
+        for direction in list(contraction_cfg.directions):
+            results[direction] = self.evaluate_contraction_direction(
+                direction, contraction_cfg=contraction_cfg
+            )
+        return results
+
+    @staticmethod
+    def flatten_contraction_metrics(result):
+        metrics = {}
+        direction = result["direction"]
+        for delta_summary in result["per_delta"]:
+            delta_label = str(delta_summary["delta0"]).replace(".", "p").replace("-", "m")
+            prefix = f"contraction/{direction}/delta_{delta_label}"
+            metrics[f"{prefix}/s_hat_alpha"] = delta_summary["conformal"]["quantile"]
+            metrics[f"{prefix}/amp_mean"] = delta_summary["amplification"]["mean"]
+            metrics[f"{prefix}/amp_median"] = delta_summary["amplification"]["median"]
+            metrics[f"{prefix}/amp_max"] = delta_summary["amplification"]["max"]
+            metrics[f"{prefix}/terminal_mean"] = delta_summary["terminal_distance"]["mean"]
+
+        jacobian = result.get("jacobian", {})
+        if jacobian:
+            prefix = f"contraction/{direction}/jacobian"
+            metrics[f"{prefix}/mean_lambda_max_sym"] = jacobian[
+                "mean_lambda_max_sym"
+            ]
+            metrics[f"{prefix}/median_lambda_max_sym"] = jacobian[
+                "median_lambda_max_sym"
+            ]
+            metrics[f"{prefix}/max_lambda_max_sym"] = jacobian["max_lambda_max_sym"]
+            metrics[f"{prefix}/mean_local_L"] = jacobian["mean_local_L"]
+        return metrics
