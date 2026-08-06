@@ -1,0 +1,94 @@
+{
+  "baseline": {
+    "conformal_upper_bound": {
+      "alpha": 0.05,
+      "coverage": 0.95,
+      "finite_threshold": true,
+      "minimum_finite_alpha": 0.009900990099009901,
+      "n_calibration": 100,
+      "order_statistic": 96,
+      "threshold": 0.6443253755569458
+    },
+    "maximum": 0.6853960156440735,
+    "mean": 0.5375911942124367,
+    "median": 0.5364639461040497,
+    "minimum": 0.418392539024353,
+    "sample_std": 0.05548663798728911
+  },
+  "calibration": {
+    "all_available_matched_identities_used_for_calibration": true,
+    "alpha": 0.05,
+    "experimental_unit": "matched source identity",
+    "heldout_coverage_audit_performed": false,
+    "n": 100,
+    "nominal_marginal_coverage": 0.95
+  },
+  "created_at_utc": "2026-08-01T20:33:28.411347+00:00",
+  "fsbm": {
+    "conformal_upper_bound": {
+      "alpha": 0.05,
+      "coverage": 0.95,
+      "finite_threshold": true,
+      "minimum_finite_alpha": 0.009900990099009901,
+      "n_calibration": 100,
+      "order_statistic": 96,
+      "threshold": 0.4470289349555969
+    },
+    "maximum": 0.4814375340938568,
+    "mean": 0.32374209418892863,
+    "median": 0.31759802997112274,
+    "minimum": 0.13135015964508057,
+    "sample_std": 0.06900878618239716
+  },
+  "method_names": {
+    "baseline": "LSBM",
+    "primary": "FSBM"
+  },
+  "metric": {
+    "evaluation_resolution": [
+      256,
+      256
+    ],
+    "input_normalization": "RGB [0,1], LPIPS normalize=True",
+    "interpretation": "perceptual change from source; lower means less source-image change, not necessarily better translation success",
+    "name": "LPIPS",
+    "network": "alex",
+    "reference": "same source image for both translated outputs",
+    "resize": "torch area interpolation from original resolution",
+    "version": "0.1"
+  },
+  "paired_difference_fsbm_minus_baseline": {
+    "certifies_fsbm_lower_lpips_at_nominal_coverage": true,
+    "conformal_upper_bound": {
+      "alpha": 0.05,
+      "coverage": 0.95,
+      "finite_threshold": true,
+      "minimum_finite_alpha": 0.009900990099009901,
+      "n_calibration": 100,
+      "order_statistic": 96,
+      "threshold": -0.08455556631088257
+    },
+    "fsbm_lower_count": 100,
+    "fsbm_lower_fraction": 1.0,
+    "maximum": -0.04349920153617859,
+    "mean": -0.21384910002350807,
+    "median": -0.21140898764133453,
+    "minimum": -0.45512422919273376,
+    "sample_std": 0.08007089646718467,
+    "tie_count": 0
+  },
+  "provenance": {
+    "baseline_directory": "/home/ptheodor3/Documents/CODING/generalized-schrodinger-bridge-matching/outputs/runs/ffhq_age/2024.11.13/172418/lsbm_outputs",
+    "evaluator": "/home/ptheodor3/Documents/CODING/FSBM/lpips_conformal_compare.py",
+    "evaluator_sha256": "f4fc47961a62baed8b1e675496a958ddc83db8cf6b761893e7b2734ed0903458",
+    "fsbm_directory": "/home/ptheodor3/Documents/CODING/generalized-schrodinger-bridge-matching/outputs/runs/ffhq_age/2024.11.13/172913/fsbm_outputs",
+    "input_directory": "/home/ptheodor3/Documents/CODING/generalized-schrodinger-bridge-matching/outputs/runs/ffhq_age/2024.11.13/172418/fsbm_inputs"
+  },
+  "runtime": {
+    "device": "cuda",
+    "platform": "Linux-6.5.0-44-generic-x86_64-with-glibc2.35",
+    "python": "3.10.19 | packaged by conda-forge | (main, Oct 22 2025, 22:29:10) [GCC 14.3.0]"
+  },
+  "schema": "fsbm-paired-lpips-conformal-v1",
+  "task": "age_forward"
+}

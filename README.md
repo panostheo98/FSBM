@@ -66,6 +66,28 @@ The overall procedure follows
 → [training epoch #2] **Matching** forward drift \
 → ...
 
+## Conformal trust and alarm evaluation
+
+The finalized DARPA dry-run package is under [`reports/`](reports/):
+
+- [`CONFORMAL_TRUST_FINAL_REPORT.pdf`](reports/CONFORMAL_TRUST_FINAL_REPORT.pdf)
+- [`CONFORMAL_TRUST_DARPA_DRY_RUN_SLIDES.pdf`](reports/CONFORMAL_TRUST_DARPA_DRY_RUN_SLIDES.pdf)
+- [`REPRODUCIBILITY.md`](reports/REPRODUCIBILITY.md)
+
+The evaluation separates transport stability, task-aligned proxy risk, and
+rendered-pixel evidence. `image_semantic_alarm.py` provides the exact
+proxy-risk/admission certificate; `image_alarm_eval.py` produces the
+fingerprinted runtime pixel alarm and controlled-fault audit. Independent
+annotations provide the evidence required for human identity and
+perceptual-quality conclusions. A future paired experiment will evaluate the
+two gates as one joint release policy.
+
+The AIQ/MAGNET FFHQ card at
+`magnet_eval/cards/fsbm_ffhq_conformal_stability_lpips.yaml` contains only the
+finite-sample conformal transport-stability result and the conformalized paired
+LPIPS comparison against LSBM, for both FFHQ tasks. The semantic-proxy alarm and
+its risk/admission metrics remain archived as a separate line of evidence.
+
 
 ## Citation
 If you find this repository helpful for your publications,

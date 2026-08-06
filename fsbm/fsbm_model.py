@@ -14,7 +14,7 @@ import torchvision.utils as tu
 from omegaconf import OmegaConf
 
 from .network import build_net
-from .sde import build_basedrift, sdeint, paired_sdeint
+from .sde import build_basedrift, build_g_guidance_potential, sdeint, paired_sdeint
 from .contraction import ensure_contraction_cfg, evaluate_directional_contraction
 
 from .dataset import PairDataset, SplineDataset
@@ -179,6 +179,57 @@ class FSBMLitModule(pl.LightningModule):
             verbose=verbose,
             generator=generator,
         )
+
+    def build_local_matrix_factory(self, direction):
+        if self.xt_ks is None:
+            return None
+
+        net = self.fwd_net if direction == "fwd" else self.bwd_net
+
+        def learned_matrix(z, t_scalar):
+            tt = torch.full((1,), t_scalar.item(), device=z.device, dtype=z.dtype)
+            if self.cfg.field == "vector":
+                return torch.autograd.functional.jacobian(
+                    lambda value: net(value.unsqueeze(0), tt).squeeze(0),
+                    z,
+                )
+            if self.cfg.field == "potential":
+                return torch.autograd.functional.hessian(
+                    lambda value: net(value.unsqueeze(0), tt).reshape(()),
+                    z,
+                )
+            raise ValueError(f"Unsupportted field: {self.cfg.field}!")
+
+        def factory(x_anchor, y_anchor):
+            g_x = build_g_guidance_potential(self.xt_ks, x_anchor, self.tau, direction)
+            g_y = build_g_guidance_potential(self.xt_ks, y_anchor, self.tau, direction)
+
+            def make_matrix_fn(g_potential):
+                def matrix_fn(state_idx, z, t_scalar):
+                    g_local = g_potential.single_state_potential(state_idx)
+                    g_hessian = torch.autograd.functional.hessian(
+                        lambda value: g_local(
+                            value.unsqueeze(0),
+                            torch.full(
+                                (1,),
+                                t_scalar.item(),
+                                device=value.device,
+                                dtype=value.dtype,
+                            ),
+                        ).reshape(()),
+                        z,
+                    )
+                    return learned_matrix(z, t_scalar) - g_hessian
+
+                return matrix_fn
+
+            return (
+                make_matrix_fn(g_x),
+                make_matrix_fn(g_y),
+                "sym(J(u_t) - Hess(G_t)) on sampled rollout states",
+            )
+
+        return factory
 
     def sample_t(self, batch):
         eps = 1e-4
@@ -465,8 +516,15 @@ class FSBMLitModule(pl.LightningModule):
             log_steps=int(contraction_cfg.log_steps),
             seed=int(contraction_cfg.seed),
             device=self.device,
+            local_matrix_factory=self.build_local_matrix_factory(direction),
             jacobian_cfg=OmegaConf.to_container(
                 contraction_cfg.jacobian, resolve=True
+            ),
+            w2_bound_cfg=OmegaConf.to_container(
+                contraction_cfg.w2_bound, resolve=True
+            ),
+            terminal_certificate_cfg=OmegaConf.to_container(
+                contraction_cfg.terminal_certificate, resolve=True
             ),
             save_scores=bool(contraction_cfg.save_scores),
             save_terminal_distances=bool(contraction_cfg.save_terminal_distances),
@@ -492,10 +550,60 @@ class FSBMLitModule(pl.LightningModule):
             delta_label = str(delta_summary["delta0"]).replace(".", "p").replace("-", "m")
             prefix = f"contraction/{direction}/delta_{delta_label}"
             metrics[f"{prefix}/s_hat_alpha"] = delta_summary["conformal"]["quantile"]
+            certificate = delta_summary.get("terminal_certificate", {})
+            if certificate:
+                metrics[f"{prefix}/terminal_cert_bound"] = certificate[
+                    "terminal_distance_bound"
+                ]
+                metrics[f"{prefix}/terminal_pred_total_error"] = certificate[
+                    "predicted_total_error_bound"
+                ]
+                if "within_tau" in certificate:
+                    metrics[f"{prefix}/terminal_within_tau"] = float(
+                        certificate["within_tau"]
+                    )
+                    metrics[f"{prefix}/terminal_max_delta0_for_tau"] = certificate[
+                        "max_certified_delta0_for_tau"
+                    ]
             metrics[f"{prefix}/amp_mean"] = delta_summary["amplification"]["mean"]
             metrics[f"{prefix}/amp_median"] = delta_summary["amplification"]["median"]
             metrics[f"{prefix}/amp_max"] = delta_summary["amplification"]["max"]
             metrics[f"{prefix}/terminal_mean"] = delta_summary["terminal_distance"]["mean"]
+            w2_bound = delta_summary.get("w2_bound", {})
+            if w2_bound:
+                metrics[f"{prefix}/w2_bound/all_coupled_holds"] = float(
+                    w2_bound["all_coupled_w2_sq_upper_holds"]
+                )
+                final_idx = -1
+                metrics[f"{prefix}/w2_bound/final_coupled_ratio"] = (
+                    w2_bound["coupled_w2_sq_upper"][final_idx]
+                    / max(w2_bound["bound_on_coupled_w2_sq_upper"][final_idx], 1e-12)
+                )
+                if "all_empirical_w2_sq_holds" in w2_bound:
+                    metrics[f"{prefix}/w2_bound/all_empirical_holds"] = float(
+                        w2_bound["all_empirical_w2_sq_holds"]
+                    )
+                    metrics[f"{prefix}/w2_bound/final_empirical_ratio"] = (
+                        w2_bound["empirical_w2_sq"][final_idx]
+                        / max(w2_bound["bound_on_empirical_w2_sq"][final_idx], 1e-12)
+                    )
+                quant_env = w2_bound.get("envelopes", {}).get("sampled_quantile", {})
+                if quant_env:
+                    metrics[f"{prefix}/w2_bound_quantile/all_coupled_holds"] = float(
+                        quant_env["all_coupled_holds"]
+                    )
+                    metrics[f"{prefix}/w2_bound_quantile/final_coupled_ratio"] = (
+                        w2_bound["coupled_w2_sq_upper"][final_idx]
+                        / max(quant_env["bound_on_coupled_w2_sq_upper"][final_idx], 1e-12)
+                    )
+                    if "all_empirical_holds" in quant_env and "empirical_w2_sq" in w2_bound:
+                        metrics[f"{prefix}/w2_bound_quantile/all_empirical_holds"] = float(
+                            quant_env["all_empirical_holds"]
+                        )
+                        metrics[f"{prefix}/w2_bound_quantile/final_empirical_ratio"] = (
+                            w2_bound["empirical_w2_sq"][final_idx]
+                            / max(quant_env["bound_on_empirical_w2_sq"][final_idx], 1e-12)
+                        )
 
         jacobian = result.get("jacobian", {})
         if jacobian:

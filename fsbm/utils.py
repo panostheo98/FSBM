@@ -44,7 +44,13 @@ def get_job_directory(file_or_checkpoint: Union[str, Dict[str, Any]]) -> str:
     job_dir = os.path.dirname(os.path.dirname(hydra_files[0]))
     return job_dir
 
-def restore_model(checkpoint, pl_name="fsbm.fsbm_model", device=None):
+def restore_model(
+    checkpoint,
+    pl_name="fsbm.fsbm_model",
+    device=None,
+    *,
+    load_keypoints=True,
+):
     ckpt = torch.load(checkpoint, map_location="cpu")
     job_dir = get_job_directory(checkpoint)
     cfg = ensure_contraction_cfg(
@@ -57,8 +63,65 @@ def restore_model(checkpoint, pl_name="fsbm.fsbm_model", device=None):
     p0, p1, p0_val, p1_val = get_dist_boundary(cfg)
     fsbm_model = importlib.import_module(f"{pl_name}")
     xt_ks = None
-    model = fsbm_model.FSBMLitModule(cfg, p0, p1, p0_val, p1_val, xt_ks, tau=200, guidance=True)
-    model.load_state_dict(ckpt["state_dict"])
+    xt_ks_path = None
+    if load_keypoints:
+        # Prefer an explicit override, then the data shipped with this
+        # repository. The final candidate preserves compatibility with the
+        # original development layout without making that user-specific path
+        # mandatory.
+        keypoint_candidates = []
+        if os.environ.get("FSBM_KEYPOINTS_PATH"):
+            keypoint_candidates.append(Path(os.environ["FSBM_KEYPOINTS_PATH"]))
+        keypoint_candidates.extend(
+            [
+                get_repo_path() / "data" / f"kp_traj_{cfg.name}.pt",
+                Path(
+                    "/home/ptheodor3/Documents/CODING/"
+                    "generalized-schrodinger-bridge-matching/data"
+                )
+                / f"kp_traj_{cfg.name}.pt",
+            ]
+        )
+        xt_ks_path = next(
+            (path for path in keypoint_candidates if path.exists()), None
+        )
+        if xt_ks_path is not None:
+            xt_ks = torch.load(xt_ks_path, map_location="cpu")
+    model = fsbm_model.FSBMLitModule(
+        cfg,
+        p0,
+        p1,
+        p0_val,
+        p1_val,
+        xt_ks,
+        tau=cfg.get("tau", 200),
+        guidance=True,
+    )
+    model_state = model.state_dict()
+    ckpt_state = ckpt["state_dict"]
+    filtered_state = {
+        key: value
+        for key, value in ckpt_state.items()
+        if key in model_state and model_state[key].shape == value.shape
+    }
+    missing_keys = [key for key in model_state.keys() if key not in filtered_state]
+    shape_mismatches = [
+        key
+        for key, value in ckpt_state.items()
+        if key in model_state and model_state[key].shape != value.shape
+    ]
+    if missing_keys or shape_mismatches:
+        raise RuntimeError(
+            "Checkpoint is incompatible with the current model definition. "
+            f"Missing keys: {missing_keys[:10]} "
+            f"(total={len(missing_keys)}), shape mismatches: "
+            f"{shape_mismatches[:10]} (total={len(shape_mismatches)})."
+        )
+    model.load_state_dict(filtered_state, strict=False)
+    model.restored_checkpoint_path = str(Path(checkpoint).resolve())
+    model.restored_keypoints_path = (
+        None if xt_ks_path is None else str(xt_ks_path.resolve())
+    )
 
     if device is not None:
         model = model.to(device)

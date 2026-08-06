@@ -162,6 +162,7 @@ cython_debug/
 #
 data/*
 outputs/*
+.magnet-runtime/
 *.npy
 *.jpg
 *.png

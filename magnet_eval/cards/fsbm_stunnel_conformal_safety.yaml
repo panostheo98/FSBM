@@ -1,0 +1,151 @@
+version: 0.0.1
+organizations:
+  - GaTech
+submitter:
+  name: Panagiotis Theodoropoulos
+  email: panostheo21@gmail.com
+tags:
+  - fsbm
+  - conformal-prediction
+  - transport-stability
+  - sampled-path-safety
+  - abstention
+links:
+  - title: Feedback Schrodinger Bridge Matching
+    url: https://arxiv.org/abs/2410.14055
+    type: publication
+title: FSBM Stunnel Conformal Sampled-Path Safety
+description: |
+  Runs a fresh split-conformal evaluation of a frozen FSBM stunnel checkpoint.
+  The score is the maximum nominal-versus-perturbed path separation over eight
+  sampled isotropic perturbation directions and every one of 101 logged Euler
+  states, using synchronous Brownian noise.
+
+  The empirical claim requires: (1) no covered case certified as clear has a
+  sampled discrete collision, (2) the certificate retains at least half of the
+  held-out cases, and (3) sampled collision risk among retained cases does not
+  exceed the risk over all held-out cases. This is a finite sampled-direction,
+  discrete-time result. It is not a continuous-time guarantee or a worst-case
+  certificate over every perturbation direction.
+
+claim:
+  python: |
+    print("\nFSBM stunnel conformal sampled-path safety")
+    print("=" * 68)
+    print(
+        "Held-out marginal coverage: "
+        f"{summary['heldout_marginal_coverage']:.4f} "
+        f"(nominal {summary['target_marginal_coverage']:.4f})"
+    )
+    print(f"Retained fraction: {summary['retained_fraction']:.4f}")
+    retained_risk = summary['sampled_collision_risk_among_retained']
+    retained_risk_text = (
+        "undefined (no retained cases)"
+        if retained_risk is None
+        else f"{retained_risk:.4f}"
+    )
+    print(
+        "Sampled collision risk: "
+        f"all={summary['overall_sampled_collision_risk']:.4f}, "
+        f"retained={retained_risk_text}"
+    )
+    print(
+        "Covered + predicted-safe sampled collisions: "
+        f"{summary['covered_predicted_safe_collision_count']}"
+    )
+    print("=" * 68)
+
+    assert summary['covered_predicted_safe_collision_count'] == 0, (
+        "geometric certificate invariant failed: a covered predicted-safe "
+        "case had a sampled discrete collision"
+    )
+    assert summary['retained_fraction'] >= minimum_retained_fraction, (
+        f"retained fraction {summary['retained_fraction']:.4f} is below "
+        f"the predeclared minimum {minimum_retained_fraction:.4f}"
+    )
+    assert retained_risk is not None, (
+        "sampled collision risk among retained cases is undefined because "
+        "the certificate retained no cases"
+    )
+    assert (
+        retained_risk
+        <= summary['overall_sampled_collision_risk'] + 1e-12
+    ), (
+        "sampled collision risk among retained cases exceeds the full "
+        "held-out sampled collision risk"
+    )
+
+symbols:
+  project_root:
+    type: str
+    python: |
+      import os
+      from magnet_eval.stunnel_safety_bridge import find_project_root
+      project_root = str(find_project_root(os.environ.get('FSBM_PROJECT_ROOT')))
+
+  checkpoint_path:
+    type: str
+    depends_on:
+      - project_root
+    python: |
+      import os
+      from magnet_eval.stunnel_safety_bridge import (
+          DEFAULT_CHECKPOINT,
+          resolve_checkpoint,
+      )
+      checkpoint_path = str(resolve_checkpoint(
+          project_root,
+          os.environ.get('FSBM_STUNNEL_CHECKPOINT', str(DEFAULT_CHECKPOINT)),
+      ))
+
+  seed:
+    type: int
+    value: 20260731
+
+  minimum_retained_fraction:
+    type: float
+    value: 0.5
+
+  evaluation:
+    type: Any
+    depends_on:
+      - project_root
+      - checkpoint_path
+      - seed
+    python: |
+      import os
+      from pathlib import Path
+      from magnet_eval.stunnel_safety_bridge import run_evaluation
+
+      output_dir = os.environ.get(
+          'FSBM_AIQ_OUTPUT_DIR',
+          str(Path(project_root) / 'outputs' / 'aiq_evaluations'
+              / f'fsbm_stunnel_conformal_safety_seed_{seed}'),
+      )
+      evaluation = run_evaluation(
+          project_root=project_root,
+          checkpoint=checkpoint_path,
+          output_dir=output_dir,
+          device='cpu',
+          direction='fwd',
+          delta=0.1,
+          alpha=0.1,
+          n_calib=128,
+          n_test=256,
+          n_probes=8,
+          nfe=100,
+          batch_size=64,
+          seed=seed,
+          target_mass=0.99,
+          risk_points=21,
+          examples=6,
+          torch_threads=4,
+      )
+
+  summary:
+    type: Dict[str, Any]
+    depends_on:
+      - evaluation
+    python: |
+      from magnet_eval.stunnel_safety_bridge import summarize_evaluation
+      summary = summarize_evaluation(evaluation)

@@ -1,0 +1,448 @@
+version: 0.0.1
+organizations:
+  - GaTech
+submitter:
+  name: Panagiotis Theodoropoulos
+  email: panostheo21@gmail.com
+tags:
+  - fsbm
+  - ffhq
+  - conformal-prediction
+  - transport-stability
+  - image-translation
+  - lpips
+  - in-distribution-generalization
+  - model-comparison
+links:
+  - title: Feedback Schrodinger Bridge Matching
+    url: https://arxiv.org/abs/2410.14055
+    type: publication
+title: FSBM FFHQ Conformal Stability and LPIPS Generalization
+description: |
+  PLAIN-LANGUAGE TASK INTUITION:
+
+  - Gender translation starts from an FFHQ latent with the dataset's female
+    label and transports it toward the male-labeled target distribution.
+  - Age translation starts from an adult FFHQ latent (age at least 35 in the
+    evaluation labels) and transports it toward the child target distribution
+    (age below 15).
+
+  For either task, the stability question is: if two source latents begin very
+  close together, do their translated endpoints remain close when FSBM uses the
+  same stochastic noise? A small conformal bound means that the declared small
+  input perturbations usually produce correspondingly small endpoint changes.
+  This result measures local consistency. Strong local stability can coexist
+  with limited change in the requested target attribute, so a semantic
+  evaluation provides the complementary evidence for edit success.
+
+  The LPIPS question is different: for the same archived source identity, does
+  the FSBM output depart less from the source image than the matched LSBM output?
+  A lower source-referenced LPIPS score means less perceptual change according
+  to AlexNet features. That can indicate better source preservation or an edit
+  that is too subtle to reach the requested target. Interpret LPIPS together
+  with separate evaluations of edit success, face identity, realism, and
+  human-perceived quality.
+
+  PRIMARY CONFORMAL CLAIM: evaluates finite-sample split-conformal upper bounds
+  on local latent transport sensitivity for frozen FSBM female-to-male and
+  adult-to-child FFHQ translations, in both forward and backward directions.
+  Each calibration/runtime score is the maximum endpoint amplification over
+  exactly four sampled isotropic perturbations under synchronous SDE noise.
+  With delta=0.1, alpha=0.05, and 1,000 calibration identities, ordinary split
+  conformal uses rank 951 and gives at least 95% marginal coverage for a new
+  exchangeable score. The endpoint bound is B=delta*S_hat. A separate PAC rank
+  of 962 gives a 95%-confidence fixed-deployment population-coverage statement
+  under the declared iid/continuous-score assumptions.
+
+  Five identity-disjoint calibration/test splits are replayed per task and
+  direction. The card reports S_hat, B, pooled held-out coverage, and exact
+  repeated beta-binomial lower-tail diagnostics. The ordinary guarantee is
+  marginal over calibration and future draws, so individual fixed-split and
+  pooled coverage values may land above or below 95%. The four task-direction
+  diagnostic cells use a predeclared Bonferroni threshold of 0.05/4. The card
+  characterizes each bound and leaves task-specific safety tolerances to mission
+  owners.
+
+  SEPARATE PAIRED LPIPS COMPARATIVE CLAIM: verifies pinned per-identity LPIPS
+  scores for 100 matched in-distribution FFHQ source identities per task. Each
+  identity has the same source reference and one archived FSBM and LSBM output.
+  AlexNet LPIPS v0.1 is evaluated at 256x256; lower values mean less perceptual
+  deviation from the source image. At alpha=0.05, task-wise upper bounds use
+  rank 96. A paired FSBM-minus-LSBM difference is also conformalized, and a
+  Bonferroni alpha of 0.025 per task keeps the familywise error budget at 0.05
+  across gender and age. Both family-adjusted paired upper bounds are
+  strictly negative. On this declared endpoint, FSBM therefore has a tighter
+  bound and better in-distribution LPIPS generalizability than LSBM.
+
+  All 100 identities calibrate each task's LPIPS bounds, producing a finite-sample
+  order-statistic prediction bound for a new exchangeable identity under the
+  archived sampling and generation procedure. Its scope is marginal,
+  in-distribution generalization. Conditional, subgroup, and distribution-shift
+  performance remain separate study areas. Source-referenced LPIPS measures
+  perceptual preservation; semantic, identity, and human-quality evaluations
+  provide the complementary evidence for requested-edit success.
+
+  The card requires pinned conformal evaluator, checkpoint, Hydra-configuration,
+  latent, label, and task-wise LPIPS-score hashes. Keypoint trajectories are
+  reserved for separate guidance/Hessian paths, while this evaluation exercises
+  the learned checkpoint drift directly.
+
+  Interpret the conformal endpoint as sampled local latent sensitivity and LPIPS
+  as source-referenced perceptual change. Semantic correctness, identity
+  preservation, artifacts, fairness, and operational mission suitability each
+  receive their own targeted evaluation.
+
+claim:
+  python: |
+    print("\nFSBM FFHQ conformal stability and LPIPS generalization")
+    print("=" * 78)
+    tasks = ('gender', 'age')
+    expected_experiments = {'gender': 'ffhq_gen', 'age': 'ffhq_age'}
+    expected_translations = {
+        'gender': 'female->male',
+        'age': 'adult->child',
+    }
+
+    print("PLAIN-LANGUAGE TASK INTUITION")
+    print("-" * 78)
+    print(
+        "gender: transport a female-labeled FFHQ latent toward the male-labeled "
+        "target distribution."
+    )
+    print(
+        "age: transport an adult FFHQ latent (age >=35) toward the child target "
+        "distribution (age <15)."
+    )
+    print(
+        "stability asks whether nearby source latents remain nearby after "
+        "translation under shared stochastic noise."
+    )
+    print(
+        "LPIPS asks whether FSBM changes the source image less than matched LSBM."
+    )
+    print(
+        "INTERPRETATION: stability measures local consistency; lower LPIPS measures "
+        "source preservation and can also reflect an edit that is too subtle."
+    )
+    print(
+        "Assess requested-edit success with a dedicated semantic evaluation."
+    )
+
+    # Primary claim: split-conformal sampled local transport sensitivity.
+    print("PRIMARY: FINITE-SAMPLE CONFORMAL TRANSPORT-STABILITY BOUNDS")
+    print("-" * 78)
+    assert conformal_summary['selected_tasks'] == list(tasks)
+    assert conformal_summary['n_primary_cells'] == 4
+    assert (
+        conformal_summary['diagnostic_family_alpha']
+        == conformal_diagnostic_family_alpha
+    )
+    assert (
+        conformal_summary['bonferroni_lower_tail_threshold']
+        == conformal_diagnostic_family_alpha / 4
+    )
+    assert conformal_summary['all_ordinary_marginal_diagnostics_consistent'], (
+        "an FFHQ conformal cell is inconsistent with the exact repeated "
+        "beta-binomial predictive law at the family-adjusted threshold"
+    )
+    for task in tasks:
+        result = conformal_summary['tasks'][task]
+        settings = result['settings']
+        assert result['experiment'] == expected_experiments[task]
+        assert result['translation'] == expected_translations[task]
+        assert settings['directions'] == ['fwd', 'bwd']
+        assert settings['deltas'] == [conformal_delta]
+        assert settings['alphas'] == [conformal_alpha]
+        assert settings['n_splits'] == conformal_splits
+        assert settings['n_calib'] == conformal_calibration_identities
+        assert settings['n_test'] == conformal_test_identities[task]
+        assert settings['n_probes'] == conformal_probes
+        assert settings['aggregation'] == 'max'
+        assert settings['nfe'] == conformal_nfe
+        assert settings['pac_beta'] == conformal_pac_beta
+        assert result['all_calibration_test_splits_disjoint']
+        assert result['maximum_identity_overlap_count'] == 0
+        assert not result['keypoints_loaded']
+        assert result['asset_sha256'] == expected_conformal_asset_sha256[task]
+        assert set(result['directions']) == {'fwd', 'bwd'}
+        for direction in ('fwd', 'bwd'):
+            cell = result['directions'][direction]
+            print(
+                f"{task:>6} {direction}: ordinary rank="
+                f"{cell['ordinary_order_statistic']}, "
+                f"S_hat median="
+                f"{cell['ordinary_amplification_threshold_median']:.4f}, "
+                f"B median={cell['ordinary_endpoint_bound_median']:.4f}, "
+                f"pooled coverage="
+                f"{cell['ordinary_pooled_empirical_coverage']:.2%}, "
+                f"exact p="
+                f"{cell['ordinary_exact_repeated_beta_binomial_pvalue']:.4f}"
+            )
+            print(
+                " " * 11 + f"PAC rank={cell['pac_order_statistic']}, "
+                f"B median={cell['pac_endpoint_bound_median']:.4f}, "
+                f"pooled coverage={cell['pac_pooled_empirical_coverage']:.2%}"
+            )
+            assert cell['ordinary_order_statistic'] == conformal_expected_rank
+            assert abs(
+                cell['ordinary_expected_rank_coverage']
+                - conformal_expected_rank
+                / (conformal_calibration_identities + 1)
+            ) < 1e-12
+            assert cell['ordinary_amplification_threshold_median'] > 0.0
+            assert cell['ordinary_endpoint_bound_median'] > 0.0
+            assert cell['ordinary_marginal_diagnostic_consistent']
+            assert (
+                cell['ordinary_exact_repeated_beta_binomial_pvalue']
+                >= conformal_summary['bonferroni_lower_tail_threshold']
+            )
+            assert cell['pac_order_statistic'] == conformal_expected_pac_rank
+            assert cell['pac_beta_cdf_at_target'] <= conformal_pac_beta
+            assert cell['pac_amplification_threshold_median'] >= (
+                cell['ordinary_amplification_threshold_median']
+            )
+            assert cell['pac_endpoint_bound_median'] >= (
+                cell['ordinary_endpoint_bound_median']
+            )
+    print(
+        "CONFORMAL CLAIM VERIFIED: for a new exchangeable FFHQ K-probe score, "
+        "the ordinary rank threshold gives at least 95% marginal coverage."
+    )
+    print(
+        "SCOPE: sampled local latent sensitivity under synchronous noise. "
+        "Semantic accuracy, all-direction robustness, and per-input coverage "
+        "each call for a dedicated evaluation."
+    )
+
+    # Separate claim: paired source-referenced LPIPS comparison with LSBM.
+    print("-" * 78)
+    print("SEPARATE: PAIRED IN-DISTRIBUTION LPIPS GENERALIZATION COMPARISON")
+    assert lpips_summary['selected_tasks'] == list(tasks)
+    assert lpips_summary['primary_method'] == 'FSBM'
+    assert lpips_summary['baseline_method'] == 'LSBM'
+    assert lpips_summary['metric']['name'] == 'LPIPS'
+    assert lpips_summary['metric']['network'] == 'AlexNet'
+    assert lpips_summary['metric']['version'] == '0.1'
+    assert lpips_summary['nominal_alpha_per_task'] == lpips_nominal_alpha
+    assert lpips_summary['family_alpha'] == lpips_family_alpha
+    assert lpips_summary['n_family_claims'] == 2
+    assert (
+        lpips_summary['family_adjusted_alpha_per_task']
+        == lpips_family_alpha / 2
+    )
+    for task in tasks:
+        result = lpips_summary['tasks'][task]
+        fsbm_bound = result['fsbm']['nominal_conformal_upper_bound']
+        lsbm_bound = result['lsbm']['nominal_conformal_upper_bound']
+        paired = result['paired_difference_fsbm_minus_lsbm']
+        paired_bound = paired['nominal_conformal_upper_bound']
+        family_paired_bound = paired['family_adjusted_conformal_upper_bound']
+        print(
+            f"{task:>6}: q_FSBM={fsbm_bound['threshold']:.4f}, "
+            f"q_LSBM={lsbm_bound['threshold']:.4f}, "
+            f"q_delta={paired_bound['threshold']:.4f}, "
+            f"family-adjusted q_delta={family_paired_bound['threshold']:.4f}"
+        )
+        print(
+            " " * 8
+            + f"FSBM bound reduction="
+            f"{result['fsbm_nominal_bound_relative_reduction']:.2%}; "
+            f"FSBM lower on {paired['fsbm_lower_count']}/"
+            f"{result['n_matched_identities']} matched identities"
+        )
+        assert result['n_matched_identities'] == 100
+        assert fsbm_bound['order_statistic'] == 96
+        assert lsbm_bound['order_statistic'] == 96
+        assert paired_bound['order_statistic'] == 96
+        assert family_paired_bound['order_statistic'] == 99
+        assert result['fsbm_nominal_bound_lower_than_lsbm']
+        assert result['nominal_paired_bound_strictly_negative']
+        assert result['family_adjusted_paired_bound_strictly_negative']
+        assert paired['fsbm_lower_count'] == result['n_matched_identities']
+        assert (
+            result['provenance']['score_file_sha256']
+            == expected_lpips_score_sha256[task]
+        )
+    assert lpips_summary['all_nominal_paired_bounds_strictly_negative']
+    assert lpips_summary['all_family_adjusted_paired_bounds_strictly_negative']
+    assert lpips_summary[
+        'supports_better_in_distribution_lpips_generalization_for_fsbm'
+    ]
+    print(
+        "PAIRED LPIPS CLAIM VERIFIED: FSBM has tighter conformal upper bounds "
+        "and better in-distribution LPIPS generalizability than LSBM on both tasks."
+    )
+    print(
+        "SCOPE: marginal source-preservation prediction for new exchangeable "
+        "identities. OOD, conditional, semantic, identity, and quality performance "
+        "each call for a dedicated evaluation."
+    )
+    print("=" * 78)
+
+symbols:
+  project_root:
+    type: str
+    python: |
+      import os
+      from magnet_eval.project import find_project_root
+      project_root = str(find_project_root(os.environ.get('FSBM_PROJECT_ROOT')))
+
+  checkpoints:
+    type: Dict[str, str]
+    depends_on:
+      - project_root
+    python: |
+      import os
+      from pathlib import Path
+      root = Path(project_root)
+      sibling = root.parent / 'generalized-schrodinger-bridge-matching'
+      checkpoints = {
+          'gender': os.environ.get(
+              'FSBM_FFHQ_GENDER_CHECKPOINT',
+              str(sibling / 'outputs/runs/ffhq_gen/2024.10.29/122638'
+                  / 'checkpoints/last.ckpt'),
+          ),
+          'age': os.environ.get(
+              'FSBM_FFHQ_AGE_CHECKPOINT',
+              str(sibling / 'outputs/runs/ffhq_age/2024.10.29/173943'
+                  / 'checkpoints/last.ckpt'),
+          ),
+      }
+
+  conformal_seed:
+    type: int
+    value: 20260716
+
+  conformal_delta:
+    type: float
+    value: 0.1
+
+  conformal_alpha:
+    type: float
+    value: 0.05
+
+  conformal_pac_beta:
+    type: float
+    value: 0.05
+
+  conformal_splits:
+    type: int
+    value: 5
+
+  conformal_calibration_identities:
+    type: int
+    value: 1000
+
+  conformal_test_identities:
+    type: Dict[str, int]
+    value:
+      gender: 1000
+      age: 600
+
+  conformal_probes:
+    type: int
+    value: 4
+
+  conformal_nfe:
+    type: int
+    value: 50
+
+  conformal_expected_rank:
+    type: int
+    value: 951
+
+  conformal_expected_pac_rank:
+    type: int
+    value: 962
+
+  conformal_diagnostic_family_alpha:
+    type: float
+    value: 0.05
+
+  lpips_nominal_alpha:
+    type: float
+    value: 0.05
+
+  lpips_family_alpha:
+    type: float
+    value: 0.05
+
+  expected_lpips_score_sha256:
+    type: Dict[str, str]
+    value:
+      gender: f4b5b707f1cb981a3470d82c3891a4ee6dd74c69626b64ac49cc5adb5cd19439
+      age: 70bf9f64a2688cc1b90b936c2a3e47677e0e559a6b328ae2cf628c2b7f2f1c2a
+
+  expected_conformal_asset_sha256:
+    type: Dict[str, Any]
+    value:
+      gender:
+        evaluator: 48437c29bec9f4f02d7def91b58ddd5db639339819a9002b60c60fe9609bba2a
+        checkpoint: 3a2278568b46b9b98dd4568bb599ff08455cc37d124045c8d12f7c8e8c0c9e1f
+        hydra_config: e68588c7b0afe6fd7cb98e46b416ed1e584fb8445113b21992b6670a07697444
+        latents: 46237baaccace670b953de74d62a689b9bdacad50207f97b166c4746f79fb684
+        labels: cd1aabbe5b0cfaa917ec94c9b6a675376ceac69b3a430644b016f36da1421538
+      age:
+        evaluator: 48437c29bec9f4f02d7def91b58ddd5db639339819a9002b60c60fe9609bba2a
+        checkpoint: 18050bf31919fd81691271ab5708e9c86ae50e0cf5a6476448a7bfcfc6522551
+        hydra_config: 4a9b1b5dc3d311081a20307ec1c074191d8f429e2c1818396e0b7053d0f1802e
+        latents: 46237baaccace670b953de74d62a689b9bdacad50207f97b166c4746f79fb684
+        labels: 0662e232785ca5674bd8c1cf9699bb570ec7b6265191ee62c2d05688994bfe25
+
+  lpips_summary:
+    type: Dict[str, Any]
+    depends_on:
+      - project_root
+      - expected_lpips_score_sha256
+      - lpips_nominal_alpha
+      - lpips_family_alpha
+    python: |
+      from magnet_eval.lpips_comparison_bridge import (
+          load_paired_lpips_comparison,
+      )
+      lpips_summary = load_paired_lpips_comparison(
+          project_root=project_root,
+          expected_sha256=expected_lpips_score_sha256,
+          tasks=('gender', 'age'),
+          nominal_alpha=lpips_nominal_alpha,
+          family_alpha=lpips_family_alpha,
+      )
+
+  conformal_evaluation:
+    type: Any
+    depends_on:
+      - project_root
+      - checkpoints
+      - conformal_seed
+    python: |
+      import os
+      import sys
+      from pathlib import Path
+      from magnet_eval.ffhq_conformal_bridge import run_evaluation_isolated
+      conformal_output_dir = os.environ.get(
+          'FSBM_AIQ_IMAGE_CONFORMAL_OUTPUT_DIR',
+          str(Path(project_root) / 'outputs' / 'aiq_evaluations'
+              / f'fsbm_ffhq_conformal_seed_{conformal_seed}'),
+      )
+      conformal_evaluation = run_evaluation_isolated(
+          scientific_python=os.environ.get(
+              'FSBM_SCIENTIFIC_PYTHON', sys.executable
+          ),
+          project_root=project_root,
+          checkpoints=checkpoints,
+          data_dir=str(Path(project_root) / 'data'),
+          output_dir=conformal_output_dir,
+          seed=conformal_seed,
+      )
+
+  conformal_summary:
+    type: Dict[str, Any]
+    depends_on:
+      - conformal_evaluation
+      - conformal_diagnostic_family_alpha
+    python: |
+      from magnet_eval.ffhq_conformal_bridge import summarize_evaluation
+      conformal_summary = summarize_evaluation(
+          conformal_evaluation,
+          diagnostic_family_alpha=conformal_diagnostic_family_alpha,
+      )
